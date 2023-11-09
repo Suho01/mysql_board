@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import db from '@/db';
 
-interface PostData {
-    name : string;
-    title : string;
-    content : string;
+interface PostNumber {
+    id : number;
 }
 
 export const POST = async (
@@ -12,17 +10,16 @@ export const POST = async (
 ) : Promise<NextResponse> => {
     if (req.method === 'POST') {
         try {
-            const {name, title, content} : PostData = JSON.parse(await req.text());
-            console.log(name, title, content);
+            const {id} : PostNumber = JSON.parse(await req.text());
 
-            if (!name || !title || !content) {
+            if (!id) {
                 return NextResponse.json({message : "데이터가 부족합니다."});
             } else {
                 /* select : 선택, insert : 입력, delete : 삭제, update : 수정 */
-                const [results] = await db.query(
-                    'insert into suho.board (author, title, content) values (?, ?, ?)', [name, title, content]
-                )
-                return NextResponse.json({message : "성공", result : results});
+                await db.query(
+                    'delete from board where id = ?', [id]
+                );
+                return NextResponse.json({message : "정상적으로 삭제되었습니다."});
             }
         } catch(error) {
             return NextResponse.json({error : "에러"});

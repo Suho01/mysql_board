@@ -11,15 +11,14 @@ export const GET = async (
         console.log(req.nextUrl.searchParams.get("page"));
         const page = Number(req.nextUrl.searchParams.get("page") || 1); // 문자열이 아닌 숫자형으로, index 방지 그리고 1보다 크게
         const perPage = 15; // limit
-        const offset = (page - 1) * perPage;
-        
+        const offset = (page - 1) * perPage;        
 
         try {
-            const [results] = await db.query<RowDataPacket[]>('SELECT * FROM world.city limit ? offset ?', [perPage, offset]); // schema.table
+            const [results] = await db.query<RowDataPacket[]>('SELECT * FROM suho.board order by date desc limit ? offset ?', [perPage, offset]); // schema.table
             const [countResult] = await db.query<RowDataPacket[]>('select count(*) as cnt from world.city');
             const totalCnt = countResult[0].cnt;
 
-            console.log(results);
+            // console.log(results);
 
             return NextResponse.json({message : "성공.", results, totalCnt, page, perPage});
         } catch(error) {
