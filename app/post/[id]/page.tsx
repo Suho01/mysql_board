@@ -51,6 +51,28 @@ export default function Detail() {
             console.log(error);
         }
     }
+
+    const updatePost = async (e : number, updatedTitle : string, updatedContent : string) => {
+        try {
+            const res = await fetch(`/api/update`, {
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json'
+                },
+                body : JSON.stringify({id : e, title : updatedTitle, content : updatedContent})
+            });
+            if (res.ok) {
+                const data = await res.json();
+                console.log(data.message);
+                window.location.href = `/edit/${e}`;
+            } else {
+                const errorData = await res.json();
+                console.log(errorData.error);
+            }
+        } catch(error) {
+            console.log(error);
+        }
+    }
     return (
         <>
         <div className="h-screen relative">
@@ -65,7 +87,7 @@ export default function Detail() {
                     )
                 }
                 <div className="absolute bottom-0 p-5 right-0">
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-600 focus:outline-none mr-5">수정</button>
+                    <button className="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-600 focus:outline-none mr-5" onClick={() => updatePost(post[0].id)}>수정</button>
                     <button className="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-600 focus:outline-none" onClick={() => deletePost(post[0].id)}>삭제</button>
                 </div>
             </div>
