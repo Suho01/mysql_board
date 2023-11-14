@@ -18,7 +18,7 @@ interface editPost {
 
 export default async function Edit(props : editProps) {
     // console.log(props.params.id); // ssr에서는 console이 터미널에 뜸
-    const [results] = await db.query<RowDataPacket[]>('update suho.board set title = ?, content = ? where id = ?', [props.params.title, props.params.content, props.params.id]);
+    const [results] = await db.query<RowDataPacket[]>('update database.board set title = ?, content = ? where id = ?', [props.params.title, props.params.content, props.params.id]);
     // 'update suho.board set 필드 = 변경값, 필드 = 변경값 where id = 변경할 아이디'
     // ('update suho.board set title = ?, content = ? where id = ?'), [title, content, id]
 

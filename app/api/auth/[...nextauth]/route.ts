@@ -34,7 +34,7 @@ export const authOptions = {
             },
             // 로그인 요청 시 실행되는 코드, db와 비교 후 맞으면 return user 정보를 보냄, 틀리면 return null
             async authorize(credentials, req) {
-                const [results] = await db.query<RowDataPacket[]>('select * from suho.member where email = ?', [credentials?.email]);
+                const [results] = await db.query<RowDataPacket[]>('select * from member where email = ?', [credentials?.email]);
                 // console.log(results[0].email);
                 if (!results[0].email) {
                     console.log("해당 사용자가 없습니다.");

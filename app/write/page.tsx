@@ -1,22 +1,21 @@
 'use client';
+
 interface formType {
     userid : string;
-    name : string;
+    username : string;
     title : string;
     content : string;
 }
 
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
+import { useCustomSession } from "../sessions";
 
 export default function Write() {
-    const session = useSession();
-    console.log(session);
-    
+    const {data : session} = useCustomSession();
     const [formData, setFormData] = useState<formType>({
-        userid : '',
-        name : '',
+        userid : session?.user?.email ?? '',
+        username : session?.user?.name ?? '',
         title : '',
         content : ''
     });
@@ -54,7 +53,7 @@ export default function Write() {
         <div className="lg:max-w-7xl md:max-w-3xl max-w-sm mx-auto">
             <div className="bg-white shadow-md mt-40">
                 <form method="post" onSubmit={submitEvent} className="p-[2%]">
-                    <p className="text-sm font-bold">닉네임</p><input type="text" name="name" defaultValue={formData.name} onChange={changeEvent} className="shadow text-gray-700 text-sm mb-2 border block p-1.5" /><br />
+                    <p className="text-sm font-bold">닉네임</p><input type="text" name="name" value={session && session.user.name} onChange={changeEvent} className="shadow text-gray-700 text-sm mb-2 border block p-1.5" /><br />
                     <p className="text-sm font-bold">제목</p><input type="text" name="title" defaultValue={formData.title} onChange={changeEvent} className="shadow text-gray-700 text-sm mb-2 border block p-1.5"/><br />
                     <p className="text-sm font-bold">내용</p><textarea name="content" defaultValue={formData.content} onChange={changeEvent} className="shadow text-gray-700 text-sm mb-2 border block p-1.5 w-full h-36"></textarea>
                     <div className="text-right my-5">

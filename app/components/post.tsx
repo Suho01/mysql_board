@@ -1,7 +1,5 @@
 'use client';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
-import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
 interface PostList {
@@ -48,6 +46,7 @@ export default function Post() {
 
     return (
         <>
+        
             <div className="mx-auto max-w-7xl p-6">
                 <div className="flex justify-between items-center mb-6">
                     <h1 className='text-2xl font-semibold'>게시판</h1>

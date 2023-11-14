@@ -3,7 +3,7 @@ import db from '@/db';
 
 interface PostData {
     userid : string;
-    name : string;
+    username : string;
     title : string;
     content : string;
 }
@@ -13,15 +13,14 @@ export const POST = async (
 ) : Promise<NextResponse> => {
     if (req.method === 'POST') {
         try {
-            const {name, title, content} : PostData = JSON.parse(await req.text());
-            console.log(name, title, content);
+            const {userid, username, title, content} : PostData = JSON.parse(await req.text());
 
-            if (!name || !title || !content) {
+            if (!userid || !username || !title || !content) {
                 return NextResponse.json({message : "데이터가 부족합니다."});
             } else {
                 /* select : 선택, insert : 입력, delete : 삭제, update : 수정 */
                 const [results] = await db.query(
-                    'insert into suho.board (userid, username, title, content) values (?, ?, ?, ?)', [userid, name, title, content]
+                    'insert into board (userid, username, title, content) values (?, ?, ?, ?)', [userid, username, title, content]
                 );
                 return NextResponse.json({message : "성공", result : results});
             }

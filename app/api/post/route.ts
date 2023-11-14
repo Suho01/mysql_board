@@ -15,7 +15,7 @@ export const GET = async (
 
         try {
             const [results] = await db.query<RowDataPacket[]>('SELECT * FROM suho.board order by date desc limit ? offset ?', [perPage, offset]); // schema.table
-            const [countResult] = await db.query<RowDataPacket[]>('select count(*) as cnt from world.city');
+            const [countResult] = await db.query<RowDataPacket[]>('select count(*) as cnt from suho.board');
             const totalCnt = countResult[0].cnt;
 
             // console.log(results);

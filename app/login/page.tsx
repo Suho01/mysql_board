@@ -1,9 +1,9 @@
 'use client'
-import {signIn, signOut} from 'next-auth/react'
+import { signIn } from 'next-auth/react'
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-
+import { useCustomSession } from '../sessions';
 
 interface userInfo{
     user:{
@@ -13,44 +13,44 @@ interface userInfo{
         level: number
     }
 }
-interface PropsData{
-    session ?: userInfo | null
-}
 
-
-export default function LoginPage({session}:PropsData) {
-
+export default function LoginPage() {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const {data : session} = useCustomSession();
+    const [preUrl, setPreUrl] = useState<string>('');
    
 
     const SignIn = () => {
-      const credentials = {
-        email: email,
-        password: password
-      };
-
-
-            
-    signIn('credentials', { ...credentials });
-       
-  
+        const credentials = {
+            email: email,
+            password: password
+        };           
+        signIn('credentials', { ...credentials, callbackUrl:preUrl });
     };
-  
 
-
-   
+    if (session && session.user) {
+        return <p>이미 로그인되어 있습니다.</p>
+    }
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const prevPage = sessionStorage.getItem('preUrl') || '/';
+            console.log(prevPage);
+            setPreUrl(prevPage);
+        }
+        console.log(typeof window);
+    }, []);
+    
     return(
         <>
-         { session && session.user.level === 10 
-            ?
-            '관리자'
-            :
-            session && session.user !== null && '일반회원'
-        }
+            {
+                session && session.user.level === 10 
+                ?
+                '관리자'
+                :
+                session && session.user !== null && '일반회원'
+            }
 
-    
-            <>
             <div className='flex justify-between w-full flex-wrap items-center py-48'>
                 <div className='basis-9/12 sm:basis-7/12 md:basis-5/12 lg:basis-4/12 mx-auto'>
                     <div className='text-start'>
@@ -91,10 +91,6 @@ export default function LoginPage({session}:PropsData) {
                     </div>
               </div>
             </div>
-            </>
-            
-       
-        
         </>
     )
 };

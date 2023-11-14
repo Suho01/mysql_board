@@ -1,5 +1,8 @@
 'use client';
 
+import Comment from "@/app/components/comment";
+import { useCustomSession } from "@/app/sessions";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -7,14 +10,15 @@ interface PostList {
     id : number;
     title : string;
     content : string;
-    author : string;
+    userid : string;
+    username : string;
     date : string;
     count : number;
 }
 
 export default function Detail() {
     const params = useParams();
-
+    const {data : session} = useCustomSession();
     const [post, setPost] = useState<PostList[]>([]);
     const [isLoading, setIsLading] = useState<boolean>(true);
     useEffect(() => {
@@ -83,13 +87,23 @@ export default function Detail() {
                         <>
                             <p className="pt-5 text-2xl text-center">{post && post[0]?.title}</p>
                             <p className="p-5">{post && post[0]?.content}</p>
+                            {
+                                session ? <Comment id={post && post[0]?.id} /> : <p className="block border p-4 text-center my-5 rounded-md"><Link href='/login'>로그인 후 댓글을 작성해주세요.</Link></p>
+                            }
                         </>
                     )
                 }
-                <div className="absolute bottom-0 p-5 right-0">
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-600 focus:outline-none mr-5" onClick={() => updatePost(post[0].id)}>수정</button>
-                    <button className="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-600 focus:outline-none" onClick={() => deletePost(post[0].id)}>삭제</button>
-                </div>
+                {
+                    session && session.user && (
+                        (post && post[0] && session.user.email === post[0].userid) || session.user.level === 10
+                    ) &&
+                    <>                    
+                        <div className="absolute bottom-0 p-5 right-0">
+                            <button className="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-600 focus:outline-none mr-5">수정</button>
+                            <button className="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-600 focus:outline-none" onClick={() => deletePost(post[0].id)}>삭제</button>
+                        </div>
+                    </>
+                }
             </div>
         </div>
         </>

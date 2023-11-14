@@ -1,5 +1,6 @@
 'use client';
 
+import { signIn } from "next-auth/react";
 import { useState } from "react";
 
 interface formType {
@@ -34,9 +35,15 @@ export default function Register() {
             });
             if (res.ok) {
                 const data = await res.json();
+                const result = data.data;
                 if (data.message === '성공') {
                     alert("회원가입이 완료되었습니다.");
-                    window.location.href='/';
+                    // window.location.href='/';
+                    signIn('credentials', {
+                        email : result.email,
+                        password : result.password,
+                        callbackUrl : '/'
+                    });
                 }
                 console.log(data);
                 setMessage(data.message);
