@@ -88,7 +88,7 @@ export default function Comment(props : CommentProps) {
         <>
             {
                 session && session.user && <>
-                <p>댓글 목록</p>
+                <p className="p-5 font-bold bg-lime-200">🤍 댓글 리스트</p>
                 {
                     totalComment && totalComment.map((e, i) => {
                         const date = new Date(e.date);
@@ -102,7 +102,7 @@ export default function Comment(props : CommentProps) {
                         const formatDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
                         return (
                             <>
-                                <ul className="flex justify-between p-5">
+                                <ul className="flex justify-between px-5 pt-5 text-sm">
                                     <li key={i}>{e.content}</li>
                                     <li>{formatDate}</li>
                                 </ul>
@@ -110,8 +110,8 @@ export default function Comment(props : CommentProps) {
                         );
                     })
                 }
-                <input name="content" type="text" onChange={commentValue} placeholder="댓글을 입력해주세요." className="border p-2 border-orange-500 rounded m-2" />
-                <button onClick={cmtSubmit}>댓글 작성</button>
+                <input name="content" type="text" onChange={commentValue} placeholder="댓글을 입력해주세요." className="border p-2 border-lime-500 rounded text-sm m-5 mt-16 lg:w-96" />
+                <button onClick={cmtSubmit} className="bg-lime-500 hover:bg-lime-600 text-white p-2 text-sm rounded-md px-4">작성</button>
                 </>
             }
         </>

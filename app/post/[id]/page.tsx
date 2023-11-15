@@ -88,8 +88,8 @@ export default function Detail() {
                 {
                     post.length > 0 && (
                         <>
-                            <p className="pt-5 text-2xl text-center">{post && post[0]?.title}</p>
-                            <p className="p-5">{post && post[0]?.content}</p>
+                            <p className="pt-5 text-xl text-center"><span className="font-bold text-base">제목 | </span>{post && post[0]?.title}</p>
+                            <p className="p-5 text-center">{post && post[0]?.content}</p>
                             {
                                 session ? <Comment id={post && post[0]?.id} /> : <p className="block border p-4 text-center my-5 rounded-md"><Link href='/login'>로그인 후 댓글을 작성해주세요.</Link></p>
                             }
