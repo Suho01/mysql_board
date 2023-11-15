@@ -56,14 +56,17 @@ export default function Detail() {
         }
     }
 
-    const updatePost = async (e : number, updatedTitle : string, updatedContent : string) => {
+    const [newTitle, setNewTitle] = useState("");
+    const [newContent, setNewContent] = useState("");
+
+    const updatePost = async (e : number, newTitle: string, newContent: string) => {
         try {
             const res = await fetch(`/api/update`, {
                 method : 'POST',
                 headers : {
                     'Content-Type' : 'application/json'
                 },
-                body : JSON.stringify({id : e, title : updatedTitle, content : updatedContent})
+                body : JSON.stringify({id : e, title : newTitle, content : newContent})
             });
             if (res.ok) {
                 const data = await res.json();
@@ -80,7 +83,7 @@ export default function Detail() {
     return (
         <>
         <div className="h-screen relative">
-            <div className="bg-white shadow-xl w-1/2 h-1/2 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hover:rotate-6">
+            <div className="bg-white shadow-xl w-1/2 h-1/2 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
                 {isLoading && <Loading />}
                 {
                     post.length > 0 && (
@@ -99,7 +102,7 @@ export default function Detail() {
                     ) &&
                     <>                    
                         <div className="absolute bottom-0 p-5 right-0">
-                            <button className="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-600 focus:outline-none mr-5">수정</button>
+                            <button className="bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-600 focus:outline-none mr-5" onClick={() => updatePost(post[0].id, newTitle, newContent)}>수정</button>
                             <button className="bg-red-500 text-white px-4 py-2 rounded shadow-md hover:bg-red-600 focus:outline-none" onClick={() => deletePost(post[0].id)}>삭제</button>
                         </div>
                     </>

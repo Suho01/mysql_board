@@ -1,3 +1,5 @@
+'use client'
+
 import { NextRequest, NextResponse } from "next/server";
 import db from '@/db';
 
@@ -27,5 +29,4 @@ export const POST = async (
     } else {
         return NextResponse.json({message : "정상적인 데이터가 아닙니다."});
     }
-    return NextResponse.json({message : "성공"});
 }

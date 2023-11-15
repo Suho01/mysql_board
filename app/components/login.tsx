@@ -1,17 +1,21 @@
-'use client';
-
 interface userInfo {
-    name : string;
-    email : string;
-    image : string;
+    user : {
+        name : string;
+        email ? : string;
+        image ? : string;
+        level ? : number;
+    }
 }
 
+import { getServerSession } from "next-auth";
 import { signIn, signOut } from "next-auth/react";
 import Link from "next/link";
-import { useCustomSession } from "../sessions";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+// import { useCustomSession } from "../sessions";
 
-export default function Login() {
-    const {data : session, status} = useCustomSession();
+export default async function Login() {
+    const session = await getServerSession(authOptions) as userInfo;
+    // const {data : session, status} = useCustomSession();
     const redirectTo = () => {
         sessionStorage.setItem('preUrl', window.location.href);
         window.location.href = "/login";
@@ -21,31 +25,32 @@ export default function Login() {
             {
                 session && session.user.level === 10 ? '관리자' : session && session.user !== null && '일반회원'
             }
-            {console.log(session && session.user)}
+            {/* {console.log(session && session.user)} */}
             {
                 session && session.user?.email ? 
-                <button onClick={() => {signOut()}}>로그아웃!!</button>
+                <button>로그아웃!!</button>
                 :
                 <>
                     {
-                        status !== 'loading' && session && session.user?.email
+                        session && session.user
                         ?
                         <>
                             <p>{session && session.user?.name}님 반가</p>
-                            <button onClick={() => {signOut()}}>로그아우</button>
+                            <Link href='/logout'>로그아우</Link>
                         </>
                         :
                         <>
+                            <Link href='/register'>회원가입</Link>
+                            <Link href='/login'>로그인</Link>
                         </>
                     }
-                    <Link href='/register'>회원가입</Link>
                     <div className="lg:max-w-7xl mx-auto flex">
-                        <button onClick={() => {signIn('kakao')}} className="block"><img className="w-52" src="./../img/kakao.png" alt="kakao" /></button>
-                        <button onClick={() => {signIn('naver')}} className="block"><img className="w-52" src="./../img/naver.png" alt="naver" /></button>
-                        <button onClick={() => {signIn('github')}} className="block w-52 h-12 rounded-md bg-gray-800 text-white">Sign in with Github</button>
-                        <button onClick={() => {signIn('google')}} className="block"><img className="w-52" src="./../img/google.png" alt="google" /></button>
-                        <button onClick={() => {signIn('credential')}} className="block text-5xl bg-slate-600 text-white p-5">통합 로그인</button>
-                        <button onClick={redirectTo}>로그인</button>
+                        <button className="block"><img className="w-52" src="./../img/kakao.png" alt="kakao" /></button>
+                        <button className="block"><img className="w-52" src="./../img/naver.png" alt="naver" /></button>
+                        <button className="block w-52 h-12 rounded-md bg-gray-800 text-white">Sign in with Github</button>
+                        <button className="block"><img className="w-52" src="./../img/google.png" alt="google" /></button>
+                        <button className="block text-5xl bg-slate-600 text-white p-5">통합 로그인</button>
+                        <button>로그인</button>
                     </div>
                 </>
             }
