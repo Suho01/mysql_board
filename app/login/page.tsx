@@ -20,6 +20,14 @@ export default function LoginPage() {
     const {data : session} = useCustomSession();
     const [preUrl, setPreUrl] = useState<string>('');
    
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const prevPage = sessionStorage.getItem('preUrl') || '/';
+            console.log(prevPage);
+            setPreUrl(prevPage);
+        }
+        console.log(typeof window);
+    }, []);
 
     const SignIn = () => {
         const credentials = {
@@ -31,15 +39,7 @@ export default function LoginPage() {
 
     if (session && session.user) {
         return <p>이미 로그인되어 있습니다.</p>
-    }
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const prevPage = sessionStorage.getItem('preUrl') || '/';
-            console.log(prevPage);
-            setPreUrl(prevPage);
-        }
-        console.log(typeof window);
-    }, []);
+    }    
     
     return(
         <>
