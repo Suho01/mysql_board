@@ -11,6 +11,7 @@ import { getServerSession } from "next-auth";
 import { signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import { authOptions } from "../api/auth/[...nextauth]/route";
+import Image from "next/image";
 // import { useCustomSession } from "../sessions";
 
 export default async function Login() {
@@ -45,10 +46,10 @@ export default async function Login() {
                         </>
                     }
                     <div className="lg:max-w-7xl mx-auto flex">
-                        <button className="block"><img className="w-52" src="./../img/kakao.png" alt="kakao" /></button>
-                        <button className="block"><img className="w-52" src="./../img/naver.png" alt="naver" /></button>
+                        <button className="block"><Image width={50} height={50} className="w-52" src="./../img/kakao.png" alt="kakao" /></button>
+                        <button className="block"><Image width={50} height={50} className="w-52" src="./../img/naver.png" alt="naver" /></button>
                         <button className="block w-52 h-12 rounded-md bg-gray-800 text-white">Sign in with Github</button>
-                        <button className="block"><img className="w-52" src="./../img/google.png" alt="google" /></button>
+                        <button className="block"><Image width={50} height={50} className="w-52" src="./../img/google.png" alt="google" /></button>
                         <button className="block text-5xl bg-slate-600 text-white p-5">통합 로그인</button>
                         <button>로그인</button>
                     </div>
