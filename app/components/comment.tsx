@@ -62,6 +62,16 @@ export default function Comment(props : CommentProps) {
         username : session?.user?.name ?? '',
         content : '' // comment
     });
+
+    useEffect(() => {
+        setFormData({
+            parentid : id,
+            userid : session?.user?.email ?? '',
+            username : session?.user?.name ?? '',
+            content : ''
+        });
+    }, [session?.user.name, session?.user.email, id]); // 글쓰기 안되면 추가해주는 코드
+
     const [totalComment, setTotalComment] = useState<CommentType[]>();
 
     const cmtSubmit = async () => {
