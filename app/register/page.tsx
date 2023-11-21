@@ -7,13 +7,15 @@ interface formType {
     email : string;
     password : string;
     name : string;
+    nickname : string;
 }
 
 export default function Register() {
     const [formData, setFormData] = useState<formType>({
         email : '',
         password : '',
-        name : ''
+        name : '',
+        nickname : ''
     });
     const [message, setMessage] = useState<string>("");
 
@@ -54,13 +56,16 @@ export default function Register() {
     }
     return (
         <>
+        <div className="max-w-7xl mx-auto pt-20">
             <p>{message}</p>
             <form onSubmit={submitEvent} method="POST">
                 <input className="border block p-2 m-2" type="text" placeholder="이메일" name="email" required onChange={changeEvent} />
                 <input className="border block p-2 m-2" type="password" placeholder="비밀번호" name="password" required onChange={changeEvent} />
                 <input className="border block p-2 m-2" type="text" placeholder="이름" name="name" required onChange={changeEvent} />
+                <input className="border block p-2 m-2" type="text" placeholder="닉네임" name="nickname" required onChange={changeEvent} />
                 <button className="bg-slate-400 text-white py-2 px-4 m-2" type="submit">가입</button>
             </form>
+        </div>
         </>
     )
 }

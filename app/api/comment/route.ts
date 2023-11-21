@@ -15,7 +15,7 @@ export const POST = async (
         try {
             const {parentid, userid, username, content} : PostData = JSON.parse(await req.text());
             // console.log(parentid, userid, username, content);
-            if (!parentid || !userid || !username ||!content) {
+            if (!parentid || !userid || !username || !content) {
                 return NextResponse.json({message : "데이터가 부족합니다."});
             } else {
                 const [results] = await db.query<RowDataPacket[]>('insert into suho.comment (parentid, userid, username, content) values (?, ?, ?, ?)', [parentid, userid, username, content]);

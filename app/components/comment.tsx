@@ -25,6 +25,7 @@ interface formType {
     userid : string;
     username : string;
     content : string;
+    nickname : string;
 }
 interface CommentType {
     id : number;
@@ -33,6 +34,7 @@ interface CommentType {
     username : string;
     content : string;
     date : string;
+    nickname : string;
 }
 
 export default function Comment(props : CommentProps) {
@@ -60,7 +62,8 @@ export default function Comment(props : CommentProps) {
         parentid : id,
         userid : session?.user?.email ?? '',
         username : session?.user?.name ?? '',
-        content : '' // comment
+        content : '', // comment
+        nickname : session?.user?.name ?? ''
     });
 
     useEffect(() => {
@@ -68,7 +71,8 @@ export default function Comment(props : CommentProps) {
             parentid : id,
             userid : session?.user?.email ?? '',
             username : session?.user?.name ?? '',
-            content : ''
+            content : '',
+            nickname : session?.user?.name ?? ''
         });
     }, [session?.user.name, session?.user.email, id]); // 글쓰기 안되면 추가해주는 코드
 
@@ -113,8 +117,9 @@ export default function Comment(props : CommentProps) {
                         return (
                             <>
                                 <ul className="flex justify-between px-5 pt-5 text-sm">
-                                    <li key={i}>{e.content}</li>
-                                    <li>{formatDate}</li>
+                                    <li className="basis-1/12 font-bold">{e.username}</li>
+                                    <li key={i} className="basis-9/12">{e.content}</li>
+                                    <li className="basis-2/12">{formatDate}</li>
                                 </ul>
                             </>
                         );

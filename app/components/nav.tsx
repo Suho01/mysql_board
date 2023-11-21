@@ -22,7 +22,7 @@ export default async function Nav() {
     return (
         <>
             <div className="max-w-7xl mx-auto pt-20">
-                <p className="font-bold">| {session && session.user.level === 10 ? '관리자' : session && session.user !== null && '일반회원'}</p>                
+                <p className="font-bold">| {session && session.user.level === 10 ? '관리자' : session && session.user !== null && '일반회원'}</p>
                 {/* {console.log(session && session.user)} */}
                 {
                     session && session.user?.email ? 
