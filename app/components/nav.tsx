@@ -4,6 +4,7 @@ interface userInfo {
         email ? : string;
         image ? : string;
         level ? : number;
+        nickname ? : string;
     }
 }
 
@@ -33,7 +34,7 @@ export default async function Nav() {
                             session && session.user
                             ?
                             <>
-                                <p>{session && session.user?.name}님 반가</p>
+                                <p>{session && session.user?.name}님 반갑습니다.</p>
                                 <Logout />
                             </>
                             :

@@ -13,6 +13,7 @@ interface userInfo {
         email ? : string;
         image ? : string;
         level ? : number;
+        nickname ? : string;
     }
 }
 interface propsType {
@@ -24,6 +25,7 @@ interface propsType {
         username ? : string;
         count ? : number;
         date ? : string;
+        nickname ? : string;
     }
 }
 

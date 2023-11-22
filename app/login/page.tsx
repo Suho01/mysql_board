@@ -7,10 +7,11 @@ import { useCustomSession } from '../sessions';
 
 interface userInfo{
     user:{
-        name:string;
-        email:any;
-        password: string;
-        level: number
+        name : string;
+        email : any;
+        password : string;
+        level : number;
+        nickname : string;
     }
 }
 

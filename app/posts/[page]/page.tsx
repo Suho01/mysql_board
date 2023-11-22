@@ -11,6 +11,7 @@ interface userInfo {
         email ? : string;
         image ? : string;
         level ? : number;
+        nickname ? : string;
     }
 }
 export default async function PostsList({

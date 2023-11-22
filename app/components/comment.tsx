@@ -63,7 +63,7 @@ export default function Comment(props : CommentProps) {
         userid : session?.user?.email ?? '',
         username : session?.user?.name ?? '',
         content : '', // comment
-        nickname : session?.user?.name ?? ''
+        nickname : session?.user?.nickname ?? ''
     });
 
     useEffect(() => {
@@ -72,9 +72,9 @@ export default function Comment(props : CommentProps) {
             userid : session?.user?.email ?? '',
             username : session?.user?.name ?? '',
             content : '',
-            nickname : session?.user?.name ?? ''
+            nickname : session?.user?.nickname ?? ''
         });
-    }, [session?.user.name, session?.user.email, id]); // 글쓰기 안되면 추가해주는 코드
+    }, [session?.user.name, session?.user.email, id, session?.user?.nickname]); // 글쓰기 안되면 추가해주는 코드
 
     const [totalComment, setTotalComment] = useState<CommentType[]>();
 
@@ -117,16 +117,18 @@ export default function Comment(props : CommentProps) {
                         return (
                             <>
                                 <ul className="flex justify-between px-5 pt-5 text-sm">
-                                    <li className="basis-1/12 font-bold">{e.username}</li>
-                                    <li key={i} className="basis-9/12">{e.content}</li>
+                                    <li className="basis-3/12 font-bold">{e.username} | <span className="font-normal text-xs">{e.userid}</span></li>
+                                    <li key={i} className="basis-7/12">{e.content}</li>
                                     <li className="basis-2/12">{formatDate}</li>
                                 </ul>
                             </>
                         );
                     })
                 }
-                <input name="content" type="text" onChange={commentValue} placeholder="댓글을 입력해주세요." className="border p-2 border-lime-500 rounded text-sm m-5 mt-16 lg:w-96" />
-                <button onClick={cmtSubmit} className="bg-lime-500 hover:bg-lime-600 text-white p-2 text-sm rounded-md px-4">작성</button>
+                <div className="w-full flex pt-10">
+                    <input name="content" type="text" onChange={commentValue} placeholder="댓글을 입력해주세요." className="border p-2 border-lime-500 rounded text-sm m-5 lg:basis-10/12" />
+                    <button onClick={cmtSubmit} className="bg-lime-500 hover:bg-lime-600 text-white p-2 text-sm rounded-md px-4 lg:basis-2/12 h-full m-5">작성</button>
+                </div>
                 </>
             }
         </>
