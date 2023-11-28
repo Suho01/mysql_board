@@ -42,9 +42,10 @@ export const POST = async (
         if (memberCnt > 0) { // 0 보다 크다는 것은 이미 이메일이 있다.
             return NextResponse.json({message : "해당 이메일이 존재합니다."});
         } else {
-            await db.query('insert into member (email, password, name, nickname) values (?, ?, ?, ?)', [email, hash, name, nickname]); // 여기서 password는 필드명이고, 들어가는 실제 값은 hash 여야한다.
+            await db.query('insert into member (email, password, name, nickname, level) values (?, ?, ?, ?, ?)', [email, hash, name, nickname, level]); // 여기서 password는 필드명이고, 들어가는 실제 값은 hash 여야한다.
             const data = {
                 email : email,
+                nickname : nickname, // undefined로 뜨기 때문에 추가해줌
                 password : password
             }
             // console.log(email, password, name);

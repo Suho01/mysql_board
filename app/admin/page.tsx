@@ -3,6 +3,7 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 // import { Bar } from 'react-chartjs-2';
 // import { Chart } from 'chart.js';
 import ChartCom from '../components/admin/chart/chart';
+import TotalCount from '../components/admin/chart/totalcnt';
 
 interface userInfo {
     user : {
@@ -52,7 +53,8 @@ export default async function Admin() {
         <>
             <div className='max-w-7xl mx-auto'>
                 <p className='text-sm'>관리자 전용 페이지</p>   
-                <ChartCom />
+                {/* <ChartCom /> */}
+                <TotalCount />
             </div>
         </>
     )
