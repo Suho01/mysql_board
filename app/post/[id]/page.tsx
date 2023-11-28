@@ -45,7 +45,7 @@ export default async function Detail({
     params ? : {id ? : number}
 }) {
     const getIp = await Getip();
-    const userIp = getIp.data;
+    const userIp = getIp.data.ip;
     // console.log(userIp);
     const postId = params?.id !== undefined ? params.id : 1;
     const [results] = await db.query<RowDataPacket[]>('select * from suho.board where id = ?', [postId]);

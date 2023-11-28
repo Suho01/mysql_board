@@ -7,14 +7,29 @@ interface formType {
     email : string;
     password : string;
     name : string;
-    nickname : string;
+    nickname ? : string;
+    level ? : number;
+    type ? : string;
+    id ? : number;
 }
 
 export const POST = async (
     req : NextRequest
 ) : Promise<NextResponse> => {
     if (req.method === 'POST') {
-        const {email, password, name, nickname} : formType = JSON.parse(await req.text());
+        let {email, password, name, nickname, level, type, id} : formType = JSON.parse(await req.text());
+        level = level === undefined ? 2 : level;
+        if (type === 'edit') {
+            const [chkMember] = await db.query<RowDataPacket[]>('select password from suho.member where email = ?', [email]);
+            if (password === chkMember[0].password) {
+                await db.query<RowDataPacket[]>('update suho.member set email = ?, name = ?, nickname = ?, level = ? where id = ?', [email, name, nickname, level, id]);
+            } else {
+                const hash = await bcrypt.hash(password, 10);
+                await db.query<RowDataPacket[]>('update suho.member set email = ?, password = ?, name = ?, nickname = ?, level = ? where id = ?', [email, hash, name, nickname, level, id]);
+            }
+            return NextResponse.json({message : "성공", data : nickname});
+        }
+        console.log(email, password, name, nickname, level, type, id);
         const hash = await bcrypt.hash(password, 10);
         // console.log(hash);
         const [checkMember] = await db.query<RowDataPacket[]>('select count(*) as cnt from member where email = ?', [email]); // 중복체크

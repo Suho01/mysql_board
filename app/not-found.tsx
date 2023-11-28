@@ -3,7 +3,7 @@ import { headers } from 'next/headers';
 export default async function NotFound() {
     const headerList = headers();
     const domain = headerList.get('referer');
-    console.log(headerList.get('referer'));
+    // console.log(headerList.get('referer'));
 
     return (
         <>

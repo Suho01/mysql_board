@@ -1,8 +1,8 @@
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import { Bar } from 'react-chartjs-2';
-import { Chart } from 'chart.js';
-import ChartCom from './chart';
+// import { Bar } from 'react-chartjs-2';
+// import { Chart } from 'chart.js';
+import ChartCom from '../components/admin/chart/chart';
 
 interface userInfo {
     user : {
@@ -43,11 +43,11 @@ export default async function Admin() {
         }
     }
     let sessions = await getServerSession(authOptions) as userInfo;
-    if (!sessions && sessions || sessions.user.level !== 10) {
-        return (
-            <p>관리자만 접속 가능한 페이지입니다.</p>
-        )
-    }
+    // if (!sessions && sessions || sessions?.user.level !== 10) {
+    //     return (
+    //         <p>관리자만 접속 가능한 페이지입니다.</p>
+    //     )
+    // }
     return (
         <>
             <div className='max-w-7xl mx-auto'>
