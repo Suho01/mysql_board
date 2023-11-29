@@ -4,6 +4,8 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 // import { Chart } from 'chart.js';
 import ChartCom from '../components/admin/chart/chart';
 import TotalCount from '../components/admin/chart/totalcnt';
+import NewMember from '../components/admin/chart/newmember';
+import NewPost from '../components/admin/chart/newpost';
 
 interface userInfo {
     user : {
@@ -55,6 +57,10 @@ export default async function Admin() {
                 <p className='text-sm'>관리자 전용 페이지</p>   
                 {/* <ChartCom /> */}
                 <TotalCount />
+                <div className="w-full my-5 flex flex-wrap justify-between">
+                    <NewMember />
+                    <NewPost />
+                </div>
             </div>
         </>
     )
